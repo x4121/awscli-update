@@ -6,6 +6,7 @@ from io import BytesIO
 import re
 import shutil
 import subprocess
+from sys import platform
 import tempfile
 from zipfile import ZipFile
 import argparse
@@ -72,16 +73,28 @@ def install_new_version(version):
     if not version.v_2:
         print("This script can only install AWS CLI v2")
         return
-    tmp = tempfile.mkdtemp()
-    url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-%s.zip" % version.version
-    result = requests.get(url, allow_redirects=True)
-    with ZipFile(BytesIO(result.content)) as zipfile:
-        zipfile.extractall(path=tmp)
-    install_script = "%s/aws/install" % tmp
-    subprocess.call(['chmod', '+x', install_script])
-    subprocess.call(['chmod', '-R', '+x', "%s/aws/dist" % tmp])
-    subprocess.call(['sudo', install_script, '--update'])
-    shutil.rmtree(tmp)
+    if platform == 'linux':
+        tmp = tempfile.mkdtemp()
+        url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-%s.zip" % version.version
+        with requests.get(url, allow_redirects=True) as result:
+            with ZipFile(BytesIO(result.content)) as zipfile:
+                zipfile.extractall(path=tmp)
+            install_script = "%s/aws/install" % tmp
+            subprocess.call(['chmod', '+x', install_script])
+            subprocess.call(['chmod', '-R', '+x', "%s/aws/dist" % tmp])
+            subprocess.call(['sudo', install_script, '--update'])
+        shutil.rmtree(tmp)
+    elif platform == 'darwin':
+        tmp = tempfile.mkdtemp()
+        url = "https://awscli.amazonaws.com/AWSCLIV2-%s.pkg" % version.version
+        with requests.get(url, allow_redirects=True) as result:
+            pkg_file = "%s/aws/install" % tmp
+            with open(pkg_file, 'wb') as file:
+                shutil.copyfileobj(result.raw, file)
+            subprocess.call(['sudo', 'installer', '--pkg', pkg_file, '-target', '/'])
+        shutil.rmtree(tmp)
+    else:
+        pass
 
 def compare_only():
     '''Check for new version but don't update'''

@@ -29,6 +29,7 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
+        'Operating System :: MacOS',
         'Operating System :: Unix',
         'Programming Language :: Python :: 3',
         'Topic :: System :: Installation/Setup',
