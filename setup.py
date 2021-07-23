@@ -20,6 +20,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     description='CLI tool to update AWS CLI 2',
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Armin Grodon',
     author_email='me@armingrodon.de',
     url='https://github.com/x4121/awscli-update',
