@@ -11,8 +11,8 @@ from lxml import html
 
 def get_latest_version():
     '''returns the latest available AWS CLI version'''
-    changelog_url='https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst'
-    version_xpath='//*[@id="readme"]/article/h2[1]/text()'
+    changelog_url = 'https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst'
+    version_xpath = '//*[@id="readme"]/article/h2[1]/text()'
     version_regex = re.compile(r'([0-9]+)\.([0-9]+)\.([0-9]+)')
     result = requests.get(changelog_url)
     body = html.fromstring(result.content)
@@ -48,8 +48,8 @@ def main():
     if not latest_version:
         print("failed to fetch latest version. aborting.")
     if not current_version or current_version != latest_version:
-        print("updating awscli from version %s to %s" % (current_version,
-            latest_version))
+        print("updating awscli from version %s to %s" %
+              (current_version, latest_version))
         install_new_version(latest_version)
     else:
         print("awscli already on latest version. skipping.")
