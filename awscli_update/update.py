@@ -1,5 +1,3 @@
-# pylint: disable=too-few-public-methods
-
 '''update AWS CLI if there is a more recent version available'''
 
 from io import BytesIO
@@ -25,6 +23,14 @@ class Version:
         if self.v_2:
             return self.version
         return '%s (AWS CLI v1!)' % self.version
+
+    def __eq__(self, other):
+        if isinstance(other, Version):
+            return self.version == other.version and self.v_2 == other.v_2
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 
 def _parse_arguments():
@@ -62,7 +68,7 @@ def get_current_version():
         version_string = subprocess.check_output(['aws', '--version']).decode('utf-8')
         match = version_regex.search(version_string)
         version = match.groups()[0] if match else None
-        v_2 = version_v2_regex.match(version) if version else False
+        v_2 = version is not None and version_v2_regex.match(version) is not None
     except (FileNotFoundError, IndexError) as _:
         return None
     return Version(version, v_2)
