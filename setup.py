@@ -1,5 +1,4 @@
 # pylint: disable=missing-module-docstring
-# pylint: disable=redefined-builtin
 
 from setuptools import setup, find_packages
 import versioneer
@@ -7,9 +6,6 @@ import versioneer
 
 with open('README.md') as f:
     readme = f.read()
-
-with open('LICENSE') as f:
-    license = f.read()
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -24,8 +20,18 @@ setup(
     author='Armin Grodon',
     author_email='me@armingrodon.de',
     url='https://github.com/x4121/awscli-update',
-    license=license,
+    license='MIT',
     packages=find_packages(exclude=('tests', 'docs')),
     scripts=['bin/awscli-update'],
-    install_requires=required
+    install_requires=required,
+    classifiers=[
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: Unix',
+        'Programming Language :: Python :: 3',
+        'Topic :: System :: Installation/Setup',
+        'Topic :: Utilities'
+    ]
 )
