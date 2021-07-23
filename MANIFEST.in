@@ -1,0 +1,2 @@
+include versioneer.py
+include awscli_update/_version.py

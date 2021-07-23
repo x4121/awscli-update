@@ -1,4 +1,8 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=redefined-builtin
+
 from setuptools import setup, find_packages
+import versioneer
 
 
 with open('README.md') as f:
@@ -12,7 +16,8 @@ with open('requirements.txt') as f:
 
 setup(
     name='awscli-update',
-    version='0.1.0',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     description='CLI tool to update AWS CLI 2',
     long_description=readme,
     author='Armin Grodon',
