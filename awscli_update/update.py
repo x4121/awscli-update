@@ -10,7 +10,7 @@ from zipfile import ZipFile
 import argparse
 import requests
 from lxml import html, etree
-import versioneer
+from . import __version__
 
 class Version:
     '''AWS CLI version'''
@@ -38,7 +38,7 @@ def _parse_arguments():
     parser.add_argument(
         '--version',
         action='version',
-        version='%(prog)s {version}'.format(version=versioneer.get_version()))
+        version='%(prog)s {version}'.format(version=__version__))
     parser.add_argument(
         '-n',
         '--noop',
