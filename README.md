@@ -16,8 +16,8 @@ python3 -m pip install awscli-update
 ```
 
 ## Development
-- Create venv (`python3 -m venv .venv`)
-- Start venv (`source .venv/bin/activate`)
+- Create venv (`python3 -m venv venv`)
+- Start venv (`source venv/bin/activate`)
 - Install dependencies (`python3 -m pip install setuptools wheel twine versioneer`)
 - Install requirements (`python3 -m pip install -r requirements`)
 - Build local dist (`python3 setup.py develop --user`)
