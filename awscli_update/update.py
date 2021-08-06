@@ -52,10 +52,10 @@ def _parse_arguments():
         action='store_true',
         help='only print error messages when updating')
     parser.add_argument(
-        '--no-sudo',
+        '--sudo',
         dest='sudo',
-        action='store_false',
-        help='''don't use sudo to install''')
+        action='store_true',
+        help='''use sudo to install (e.g. when installing to /usr/local)''')
     parser.add_argument(
         '--prefix',
         help=(

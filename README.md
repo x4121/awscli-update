@@ -13,7 +13,7 @@ optional arguments:
   --version        show program's version number and exit
   -n, --noop       only compare versions but don't install
   -q, --quiet      only print error messages when updating
-  --no-sudo        don't use sudo to install
+  --sudo           use sudo to install (e.g. when installing to /usr/local)
   --prefix PREFIX  install aws-cli in custom path (default is /usr/local)
                    only working on Linux right now
 ```
@@ -32,7 +32,7 @@ you want to install the AWS CLI in `$HOME/.local/bin` and
 you want to check for updates every hour,
 run `crontab -e` and add following line
 ```
-0 * * * * $HOME/.local/bin/awscli-update -q --no-sudo --prefix $HOME/.local
+0 * * * * $HOME/.local/bin/awscli-update -q --prefix $HOME/.local
 ```
 
 If you want to check for updates more/less often or at specific times,
