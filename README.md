@@ -1,19 +1,42 @@
 # AWS CLI v2 Update Script
+A small script to keep the AWS CLI v2 up to date,
+until AWS figures out how to distribute software properly.
+
+**Looking for someone that can help to make this work on Mac or Windows**
 
 ## Usage
 ```
-usage: awscli-update [-h] [--version] [-n]
+usage: awscli-update [-h] [--version] [-n] [-q] [--no-sudo] [--prefix PREFIX]
 
 optional arguments:
-  -h, --help  show this help message and exit
-  --version   show program's version number and exit
-  -n, --noop  only compare versions but don't install
+  -h, --help       show this help message and exit
+  --version        show program's version number and exit
+  -n, --noop       only compare versions but don't install
+  -q, --quiet      only print error messages when updating
+  --no-sudo        don't use sudo to install
+  --prefix PREFIX  install aws-cli in custom path (default is /usr/local)
+                   only working on Linux right now
 ```
 
 ### Setup
 ```bash
 python3 -m pip install awscli-update
 ```
+
+### Auto update
+Right now this is only tested on Linux.
+
+Assuming the `awscli-update` binary is installed in `$HOME/.local/bin`
+(check the location on your machine by running `which awscli-update`),
+you want to install the AWS CLI in `$HOME/.local/bin` and
+you want to check for updates every hour,
+run `crontab -e` and add following line
+```
+0 * * * * $HOME/.local/bin/awscli-update -q --no-sudo --prefix $HOME/.local
+```
+
+If you want to check for updates more/less often or at specific times,
+check [this editor for cron expressions](https://crontab.guru/).
 
 ## Development
 - Create venv (`python3 -m venv venv`)
