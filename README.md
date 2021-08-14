@@ -15,7 +15,6 @@ optional arguments:
   -q, --quiet      only print error messages when updating
   --sudo           use sudo to install (e.g. when installing to /usr/local)
   --prefix PREFIX  install aws-cli in custom path (default is /usr/local)
-                   only working on Linux right now
 ```
 
 ### Setup
@@ -24,7 +23,9 @@ python3 -m pip install awscli-update
 ```
 
 ### Auto update
-Right now this is only tested on Linux.
+**This is only tested on Linux at the moment.**
+
+TBD: where does macOS install Python binaries?
 
 Assuming the `awscli-update` binary is installed in `$HOME/.local/bin`
 (check the location on your machine by running `which awscli-update`),
