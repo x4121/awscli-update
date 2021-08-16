@@ -5,8 +5,6 @@ A small script to keep the AWS CLI v2 up to date,
 [until AWS figures out how to distribute software
 properly](https://github.com/aws/aws-cli/issues/4947).
 
-**Looking for someone that can help to make this work on Mac or Windows**
-
 ## Usage
 ```
 usage: awscli-update [-h] [--version] [-n] [-q] [--no-sudo] [--prefix PREFIX]
@@ -26,10 +24,7 @@ python3 -m pip install awscli-update
 ```
 
 ### Auto update
-**This is only tested on Linux at the moment.**
-
-TBD: where does macOS install Python binaries?
-
+#### Linux
 Assuming the `awscli-update` binary is installed in `$HOME/.local/bin`
 (check the location on your machine by running `which awscli-update`),
 you want to install the AWS CLI in `$HOME/.local/bin` and
@@ -39,6 +34,18 @@ run `crontab -e` and add following line
 0 * * * * $HOME/.local/bin/awscli-update -q --prefix $HOME/.local
 ```
 
+#### macOS
+Assuming the `awscli-update` binary is installed in `/opt/homebrew/bin`
+(check the location on your machine by running `which awscli-update`),
+you want to install the AWS CLI in `/opt/homebrew/bin` and
+you want to check for updates every hour,
+run `crontab -e` and add following line
+```
+PATH=$PATH:/usr/sbin
+0 * * * * /opt/homebrew/bin/awscli-update -q --prefix /opt/homebrew
+```
+
+#### General things
 If you want to check for updates more/less often or at specific times,
 check [this editor for cron expressions](https://crontab.guru/).
 
