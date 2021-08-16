@@ -1,6 +1,9 @@
 # AWS CLI v2 Update Script
+[![PyPI - awscli-update](https://img.shields.io/pypi/v/awscli-update.svg?color=blue&label=awscli-update)](https://pypi.org/project/awscli-update)
+
 A small script to keep the AWS CLI v2 up to date,
-until AWS figures out how to distribute software properly.
+[until AWS figures out how to distribute software
+properly](https://github.com/aws/aws-cli/issues/4947).
 
 **Looking for someone that can help to make this work on Mac or Windows**
 
