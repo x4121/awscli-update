@@ -151,6 +151,18 @@ def _darwin_install(version, args):
                 subprocess.call(install_command, stdout=subprocess.DEVNULL)
             else:
                 subprocess.call(install_command)
+            if args.prefix:
+                os.makedirs(args.prefix, exist_ok=True)
+                aws_bin_src = "%s/aws-cli/aws" % args.prefix
+                aws_bin_dst = "%s/bin/aws" % args.prefix
+                aws_cmp_src = "%s/aws-cli/aws_completer" % args.prefix
+                aws_cmp_dst = "%s/bin/aws_completer" % args.prefix
+                if os.path.exists(aws_bin_dst):
+                    os.remove(aws_bin_dst)
+                if os.path.exists(aws_cmp_dst):
+                    os.remove(aws_cmp_dst)
+                os.symlink(aws_bin_src, aws_bin_dst)
+                os.symlink(aws_cmp_src, aws_cmp_dst)
 
 def install_new_version(version, args):
     '''Installs new AWS CLI with provided version'''
