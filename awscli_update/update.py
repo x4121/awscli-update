@@ -9,7 +9,7 @@ import tempfile
 from zipfile import ZipFile
 import argparse
 import requests
-from lxml import html, etree
+from bs4 import BeautifulSoup
 from . import __version__
 
 class Version:
@@ -63,14 +63,13 @@ def _parse_arguments():
 def get_latest_version():
     '''returns the latest available AWS CLI version'''
     changelog_url = 'https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst'
-    version_xpath = '//*[@id="readme"]/article/h2[1]/text()'
     version_regex = re.compile(r'([0-9]+)\.([0-9]+)\.([0-9]+)')
     try:
         result = requests.get(changelog_url)
-        body = html.fromstring(result.content)
-        version = body.xpath(version_xpath)[0]
+        soup = BeautifulSoup(result.content, 'html.parser')
+        version = soup.find(id='readme').find_all('h2')[0].text
         match = version_regex.match(version)
-    except (ConnectionError, IndexError, etree.ParserError) as _:
+    except (ConnectionError, IndexError) as _:
         return None
     return Version(version) if match else None
 
