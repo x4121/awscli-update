@@ -53,7 +53,7 @@ check [this editor for cron expressions](https://crontab.guru/).
 - Create venv (`python3 -m venv venv`)
 - Start venv (`source venv/bin/activate`)
 - Install dependencies (`python3 -m pip install setuptools wheel twine versioneer`)
-- Install requirements (`python3 -m pip install -r requirements`)
+- Install requirements (`python3 -m pip install -r requirements.txt`)
 - Build local dist (`python3 setup.py develop --user`)
 
 ## Deployment
