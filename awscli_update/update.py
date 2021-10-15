@@ -10,6 +10,7 @@ from zipfile import ZipFile
 import argparse
 import requests
 from bs4 import BeautifulSoup
+from bs4.element import Tag
 from . import __version__
 
 class Version:
@@ -67,7 +68,8 @@ def get_latest_version():
     try:
         result = requests.get(changelog_url)
         soup = BeautifulSoup(result.content, 'html.parser')
-        version = soup.find(id='readme').find_all('h2')[0].text
+        readme = soup.find(id='readme')
+        version = readme.find_all('h2')[0].text if isinstance(readme, Tag) else ''
         match = version_regex.match(version)
     except (ConnectionError, IndexError) as _:
         return None
