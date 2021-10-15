@@ -165,6 +165,22 @@ def _darwin_install(version, args):
                 os.symlink(aws_bin_src, aws_bin_dst)
                 os.symlink(aws_cmp_src, aws_cmp_dst)
 
+def _windows_install(version, args):
+    if args.sudo or args.prefix:
+        print("--sudo and --prefix are not supported on Windows")
+        return
+    with tempfile.TemporaryDirectory() as tmp:
+        msi = "%s/awscliv2.msi" % tmp
+        url = "https://awscli.amazonaws.com/AWSCLIV2-%s.msi" % version.version
+        with requests.get(url, allow_redirects=True) as result:
+            with open(msi, 'wb') as file:
+                file.write(result.content)
+            install_command = ['msiexec.exe', '/i', msi, '/passive']
+            if args.quiet:
+                subprocess.call(install_command, stdout=subprocess.DEVNULL)
+            else:
+                subprocess.call(install_command)
+
 def install_new_version(version, args):
     '''Installs new AWS CLI with provided version'''
     if not version.v_2:
@@ -174,6 +190,8 @@ def install_new_version(version, args):
         _linux_install(version, args)
     elif platform == 'darwin':
         _darwin_install(version, args)
+    elif platform == 'win32':
+        _windows_install(version, args)
     else:
         pass
 
