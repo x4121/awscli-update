@@ -9,8 +9,6 @@ import tempfile
 from zipfile import ZipFile
 import argparse
 import requests
-from bs4 import BeautifulSoup
-from bs4.element import Tag
 from . import __version__
 
 class Version:
@@ -63,13 +61,12 @@ def _parse_arguments():
 
 def get_latest_version():
     '''returns the latest available AWS CLI version'''
-    changelog_url = 'https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst'
+    tags_url = 'https://api.github.com/repos/aws/aws-cli/tags'
     version_regex = re.compile(r'([0-9]+)\.([0-9]+)\.([0-9]+)')
     try:
-        result = requests.get(changelog_url)
-        soup = BeautifulSoup(result.content, 'html.parser')
-        readme = soup.find(id='readme')
-        version = readme.find_all('h2')[0].text if isinstance(readme, Tag) else ''
+        result = requests.get(tags_url)
+        tags = result.json()
+        version = tags[0]['name']
         match = version_regex.match(version)
     except (ConnectionError, IndexError) as _:
         return None
